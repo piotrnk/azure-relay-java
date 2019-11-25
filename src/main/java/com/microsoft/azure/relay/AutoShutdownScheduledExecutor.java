@@ -25,6 +25,10 @@ public class AutoShutdownScheduledExecutor implements ScheduledExecutorService {
 	AutoShutdownScheduledExecutor(int size) {
 		corePoolSize = size;
 	}
+
+	public synchronized ScheduledThreadPoolExecutor getInnerExecutor(){
+	    return innerExecutor;
+    }
 	
 	public int getCorePoolSize() {
 		return this.corePoolSize;

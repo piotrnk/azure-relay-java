@@ -36,6 +36,10 @@ class ClientWebSocket extends Endpoint implements RelayTraceSource {
 		this.closeReason = null;
 		this.trackingContext = trackingContext;
 	}
+
+	public synchronized AutoShutdownScheduledExecutor getExecutor(){
+	    return executor;
+    }
 	
 	public TrackingContext getTrackingContext() {
 		return trackingContext;
@@ -342,8 +346,12 @@ class ClientWebSocket extends Endpoint implements RelayTraceSource {
 	public void onError(Session session, Throwable cause) {
 		RelayLogger.throwingException(cause, this);
 	}
-	
-	private static class MessageFragment {
+
+    public WebSocketContainer getContainer() {
+        return container;
+    }
+
+    private static class MessageFragment {
 		private final byte[] bytes;
 		private final boolean ended;
 
